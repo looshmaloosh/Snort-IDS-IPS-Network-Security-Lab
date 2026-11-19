@@ -425,14 +425,6 @@ This project provided practical experience in:
 
 Overall, this lab demonstrated how Snort can support a layered network security strategy by combining traffic visibility with selective intrusion prevention.
 
-## Author
-
-**Ali Fares**
-
-Bachelor of Cybersecurity — University of Technology Sydney (UTS)
-
-This project extends an earlier UTS Cybersecurity practical through additional custom rules, protocol testing and inline Snort IPS implementation.
-
 ## References
 
 Fielding, R., Nottingham, M., & Reschke, J. (2022). *HTTP semantics* (RFC 9110). RFC Editor. https://doi.org/10.17487/RFC9110
@@ -448,3 +440,12 @@ Snort. (n.d.-a). *README.daq*. https://www.snort.org/document/readme-daq
 Snort. (n.d.-b). *README.filters*. https://www.snort.org/document/readme-filters
 
 Ylonen, T., & Lonvick, C. (2006). *The Secure Shell (SSH) protocol architecture* (RFC 4251). RFC Editor. https://doi.org/10.17487/RFC4251
+
+
+## Author
+
+**Ali Fares**
+
+Bachelor of Cybersecurity — University of Technology Sydney (UTS)
+
+This project extends an earlier UTS Cybersecurity practical through additional custom rules, protocol testing and inline Snort IPS implementation.
