@@ -48,7 +48,7 @@ Snort was configured with NFQUEUE to enable inline packet inspection, allowing s
 The lab consists of two Ubuntu virtual machines connected through an isolated virtual network.
 
 <p align="center">
-  <img src="architecture/SnortArchitecture.drawio.png" width="750" alt="Snort IDS/IPS Architecture">
+  <img src="architecture/SnortArchitecture.drawio.png" width="750">
 </p>
 
 ### Attacker VM - 10.0.2.7
@@ -157,9 +157,13 @@ The rule detects the TCP SYN connection attempt rather than determining whether 
 
 **Evidence:**
 
-![SSH Connection](screenshots/SSH.jpeg)
+<p align="center">
+  <img src="screenshots/SSH.jpeg" width="750" alt="SSH Connection">
+</p>
 
-![SSH Detection Alert](screenshots/SshIDS.jpeg)
+<p align="center">
+  <img src="screenshots/SshIDS.jpeg" width="750" alt="Snort SSH Detection">
+</p>
 
 ---
 
@@ -196,11 +200,17 @@ This certificate warning was unrelated to Snort's IDS operation.
 
 **Evidence:**
 
-![HTTPS Curl Test](screenshots/HttpsCurl.jpeg)
+<p align="center">
+  <img src="screenshots/HttpsCurl.jpeg" width="750" alt="HTTPS Request">
+</p>
 
-![HTTPS Detection Alert](screenshots/HttpsIDS.jpeg)
+<p align="center">
+  <img src="screenshots/HttpsIDS.jpeg" width="750" alt="HTTPS Detection">
+</p>
 
-![HTTPS Certificate Warning](screenshots/HttpsVisual.jpeg)
+<p align="center">
+  <img src="screenshots/HttpsVisual.jpeg" width="750" alt="HTTPS Browser">
+</p>
 
 ---
 
@@ -231,9 +241,13 @@ ping -c 4 10.0.2.6
 
 **Evidence:**
 
-![ICMP Echo Test](screenshots/IcmpPing.jpeg)
+<p align="center">
+  <img src="screenshots/IcmpPing.jpeg" width="750" alt="ICMP Echo Request">
+</p>
 
-![ICMP Echo Detection](screenshots/IcmpIDS.jpeg)
+<p align="center">
+  <img src="screenshots/IcmpIDS.jpeg" width="750" alt="ICMP Echo Detection">
+</p>
 
 ---
 
@@ -266,10 +280,13 @@ The rule was configured for detection only and did not automatically block or ra
 
 **Evidence:**
 
-![ICMP Flood Test](screenshots/ICMPFloodAttack.jpeg)
+<p align="center">
+  <img src="screenshots/ICMPFloodAttack.jpeg" width="750" alt="ICMP Flood Test">
+</p>
 
-![ICMP Flood Detection](screenshots/ICMPFloodIDS.jpeg)
-
+<p align="center">
+  <img src="screenshots/ICMPFloodIDS.jpeg" width="750" alt="ICMP Flood Detection">
+</p>
 
 ## Intrusion Prevention System (IPS)
 
@@ -317,12 +334,15 @@ This demonstrated that the insecure remote administration protocol was prevented
 
 Telnet connection prevented:
 
-![Telnet Blocked](screenshots/Telnet.jpeg)
+<p align="center">
+  <img src="screenshots/Telnet.jpeg" width="750" alt="Telnet Connection Blocked">
+</p>
 
 Snort drop event:
 
-![Telnet IPS Drop](screenshots/TelnetIPS.jpeg)
-
+<p align="center">
+  <img src="screenshots/TelnetIPS.jpeg" width="750" alt="Snort Telnet Drop">
+</p>
 ---
 
 ### Scenario 6 - HTTP Connection Prevention (TCP 80)
@@ -362,14 +382,19 @@ An additional Firefox test demonstrated that the HTTP webpage could no longer be
 
 HTTP connection prevented:
 
-![HTTP Browser Blocked](screenshots/HttpCurl.jpeg)
+<p align="center">
+  <img src="screenshots/HttpCurl.jpeg" width="750" alt="HTTP Request Blocked">
+</p>
 
-![Visual HTTP Browser Blocked](screenshots/HttpVisual.jpeg)
+<p align="center">
+  <img src="screenshots/HttpVisual.jpeg" width="750" alt="HTTP Browser Blocked">
+</p>
 
 Snort drop event:
 
-![HTTP IPS Drop](screenshots/HttpIPS.jpeg)
-
+<p align="center">
+  <img src="screenshots/HttpIPS.jpeg" width="750" alt="Snort HTTP Drop">
+</p>
 ---
 
 ### Scenario 7 - ICMP Source Quench Prevention
@@ -402,9 +427,13 @@ This demonstrated active packet prevention using the custom ICMP security signat
 
 **Evidence:**
 
-![Netwag Source Quench Generation](screenshots/SourceQuenchAttack.jpeg)
+<p align="center">
+  <img src="screenshots/SourceQuenchAttack.jpeg" width="750" alt="Source Quench Generation">
+</p>
 
-![Source Quench IPS Drop](screenshots/SourceQuenceIPS.jpeg)
+<p align="center">
+  <img src="screenshots/SourceQuenceIPS.jpeg" width="750" alt="Snort Source Quench Drop">
+</p>
 
 ## Results Summary
 
