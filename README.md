@@ -1,7 +1,24 @@
 # Snort-IDS-IPS-Network-Security-Lab
 A hands-on network security lab demonstrating intrusion detection and prevention using Snort 2.9.6, custom security rules, Linux NFQUEUE and two Ubuntu virtual machines.
 
-## Network Architecture
+## Project Overview
+
+This project extends a previous university cybersecurity practical into a functional Snort Intrusion Detection and Prevention System (IDS/IPS).
+
+Using two Ubuntu virtual machines, seven custom Snort rules were implemented and tested to demonstrate network traffic monitoring, protocol-based intrusion prevention and threshold-based ICMP detection.
+
+Snort was configured with NFQUEUE to enable inline packet inspection, allowing selected network traffic to be actively blocked while legitimate connections remained accessible.
+
+| Component | Configuration |
+|---|---|
+| Attacker | Ubuntu VM — 10.0.2.7 |
+| Server | Ubuntu VM — 10.0.2.6 |
+| Security Engine | Snort 2.9.6.0 |
+| Packet Processing | DAQ 2.0.2 / NFQUEUE |
+| Detection Scenarios | 4 |
+| Prevention Scenarios | 3 |
+
+## Lab Architecture
 
 The lab consists of two Ubuntu virtual machines connected through an isolated virtual network.
 
@@ -88,7 +105,7 @@ Four detection scenarios were implemented using custom Snort `alert` rules.
 
 SSH is commonly used for secure remote administration because it encrypts communication between clients and servers.
 
-Unlike Telnet, SSH protects authentication credentials and session contents against passive interception.
+Unlike Telnet, SSH protects authentication credentials and session contents against passive interception. (Ylonen & Lonvick, 2006)
 
 For this reason, the lab's security policy permits SSH connections while monitoring connection attempts for security visibility.
 
@@ -123,7 +140,7 @@ The rule detects the TCP SYN connection attempt rather than determining whether 
 
 **Objective:** Detect HTTPS connection attempts while permitting encrypted web communication.
 
-HTTPS uses TLS to encrypt web communications, providing confidentiality and integrity for data exchanged between a browser and web server.
+HTTPS uses TLS to encrypt web communications, providing confidentiality and integrity for data exchanged between a browser and web server. (Fielding et al., 2022)
 
 The lab's policy permits HTTPS traffic while recording connection attempts through Snort.
 
@@ -166,7 +183,7 @@ This certificate warning was unrelated to Snort's IDS operation.
 
 ICMP Echo Requests are commonly used by administrators to verify connectivity and troubleshoot network issues.
 
-Because ICMP is useful for legitimate network diagnostics, the lab's security policy monitors ordinary Echo Requests instead of blocking them.
+Because ICMP is useful for legitimate network diagnostics, the lab's security policy monitors ordinary Echo Requests instead of blocking them. (Postel, 1981)
 
 <details>
 <summary><strong>View Snort ICMP Echo Request Detection Rule</strong></summary>
@@ -197,7 +214,7 @@ ping -c 4 10.0.2.6
 
 **Objective:** Detect excessive ICMP Echo Requests using rate-based traffic analysis.
 
-While ordinary ICMP traffic is useful for network troubleshooting, an unusually high volume of Echo Requests may indicate network scanning, flooding or denial-of-service activity.
+While ordinary ICMP traffic is useful for network troubleshooting, an unusually high volume of Echo Requests may indicate network scanning, flooding or denial-of-service activity. (Snort, n.d)
 
 A threshold-based rule was implemented to detect ICMP traffic exceeding 20 requests within one second.
 
@@ -241,7 +258,7 @@ Unlike passive IDS operation, inline IPS processing allows Snort to issue packet
 
 Telnet is an older remote administration protocol that transmits authentication credentials and session data without encryption.
 
-This creates opportunities for credential interception and unauthorised disclosure if the traffic is captured by an attacker.
+This creates opportunities for credential interception and unauthorised disclosure if the traffic is captured by an attacker. (Postel & Reynolds, 1983)
 
 SSH provides encrypted remote administration and is therefore the preferred alternative.
 
@@ -285,16 +302,15 @@ Snort drop event:
 
 **Objective:** Prevent unencrypted HTTP access while permitting HTTPS.
 
-HTTP transmits application traffic without transport-layer encryption, potentially exposing sensitive information to interception.
+HTTP transmits application traffic without transport-layer encryption, potentially exposing sensitive information to interception. (Fielding et al., 2022)
 
 HTTPS uses TLS to provide encrypted communications and is generally preferred for modern web applications.
 
 The lab implements a strict policy that blocks HTTP connections while permitting HTTPS access.
 
-This is a deliberately restrictive demonstration policy; some production environments still require HTTP for redirects, compatibility or specialised services.
+This is a deliberately restrictive demonstration policy; some production environments still require HTTP for redirects, compatibility or specialised services. 
 
 <details>
-```
 <summary><strong>View Snort HTTP Connection Drop Rule</strong></summary>
 
 ```snort
@@ -333,11 +349,11 @@ Snort drop event:
 
 **Objective:** Detect and prevent obsolete ICMP Source Quench traffic.
 
-ICMP Source Quench (Type 4, Code 0) was historically used to request that a sender reduce its transmission rate during congestion.
+ICMP Source Quench (Type 4, Code 0) was historically used to request that a sender reduce its transmission rate during congestion. (Gont, 2012)
 
 The message type has since been deprecated because of security and protocol reliability concerns.
 
-To demonstrate protocol-level intrusion prevention, a custom rule was configured to drop ICMP Source Quench packets.
+To demonstrate protocol-level intrusion prevention, a custom rule was configured to drop ICMP Source Quench packets. 
 
 <details>
 ```
