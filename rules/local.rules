@@ -1,0 +1,47 @@
+# $Id: local.rules,v 1.11 2004/07/23 20:15:44 bmc Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+
+# ------------------------------------------------------------
+# SCENARIO 1: ICMP ECHO REQUEST - IDS - Detect normal ping requests without blocking them.
+# ------------------------------------------------------------
+
+alert icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IDS - ICMP Echo Request Detected"; itype:8; sid:1000001; rev:2;)
+
+# ------------------------------------------------------------
+# SCENARIO 2: HTTP - IPS - Block unencrypted HTTP connections on TCP port 80.
+# ------------------------------------------------------------
+
+drop tcp 10.0.2.7 any -> 10.0.2.6 80 (msg:"LAB IPS - HTTP Connection Blocked"; sid:1000002; rev:2;)
+
+# ------------------------------------------------------------
+# SCENARIO 3: ICMP SOURCE QUENCH - IPS - Block obsolete ICMP Type 4, Code 0 packets.
+# ------------------------------------------------------------
+
+drop icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IPS - ICMP Source Quench Blocked"; itype:4; icode:0; sid:1000003; rev:2;)
+
+# ------------------------------------------------------------
+# SCENARIO 4: SSH - IDS - Detect SSH connection attempts without blocking them.
+# ------------------------------------------------------------
+
+alert tcp 10.0.2.7 any -> 10.0.2.6 22 (msg:"LAB IDS - SSH Connection Attempt Detected"; flags:S; sid:1000004; rev:2;)
+
+# ------------------------------------------------------------
+# SCENARIO 5: TELNET - IPS - Block insecure Telnet connections on TCP port 23.
+# ------------------------------------------------------------
+
+drop tcp 10.0.2.7 any -> 10.0.2.6 23 (msg:"LAB IPS - Telnet Connection Blocked"; sid:1000005; rev:2;)
+
+# ------------------------------------------------------------
+# SCENARIO 6: HTTPS - IDS - Detect HTTPS connection attempts without blocking them.
+# ------------------------------------------------------------
+
+alert tcp 10.0.2.7 any -> 10.0.2.6 443 (msg:"LAB IDS - HTTPS Connection Attempt Detected"; flags:S; sid:1000006; rev:1;)
+
+# ------------------------------------------------------------
+# SCENARIO 7: ICMP ECHO FLOOD - IDS - Alert when more than 20 Echo Requests arrive within 1 second.
+# ------------------------------------------------------------
+
+alert icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IDS - ICMP Echo Flood Detected"; itype:8; detection_filter:track by_src,count 20,seconds 1; sid:1000007; rev:1;)
+
