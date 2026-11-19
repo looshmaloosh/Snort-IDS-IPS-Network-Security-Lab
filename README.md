@@ -28,6 +28,21 @@ Snort was configured with NFQUEUE to enable inline packet inspection, allowing s
 | Detection Scenarios | 4 |
 | Prevention Scenarios | 3 |
 
+
+## 📑 Table of Contents
+
+- [Lab Architecture](#lab-architecture)
+- [Snort Configuration and Inline IPS](#snort-configuration-and-inline-ips)
+- [Intrusion Detection System (IDS)](#intrusion-detection-system-ids)
+- [Intrusion Prevention System (IPS)](#intrusion-prevention-system-ips)
+- [Results Summary](#results-summary)
+- [Challenges and Troubleshooting](#challenges-and-troubleshooting)
+- [Key Takeaways](#key-takeaways)
+- [References](#references)
+- [Author](#author)
+
+---
+
 ## Lab Architecture
 
 The lab consists of two Ubuntu virtual machines connected through an isolated virtual network.
