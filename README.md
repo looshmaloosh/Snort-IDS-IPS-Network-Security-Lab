@@ -214,3 +214,127 @@ The rule was configured for detection only and did not automatically block or ra
 
 ![ICMP Flood Detection](screenshots/ICMPFloodIDS.jpeg)
 
+
+## Intrusion Prevention System (IPS)
+
+The IPS component extends Snort's monitoring capabilities by actively preventing network traffic that violates the lab's security policy.
+
+Three prevention scenarios were implemented using custom Snort `drop` rules.
+
+Unlike passive IDS operation, inline IPS processing allows Snort to issue packet-drop decisions through the NFQUEUE interface.
+
+### Scenario 5 — Telnet Connection Prevention (TCP 23)
+
+**Objective:** Prevent insecure remote access using Telnet.
+
+Telnet is an older remote administration protocol that transmits authentication credentials and session data without encryption.
+
+This creates opportunities for credential interception and unauthorised disclosure if the traffic is captured by an attacker.
+
+SSH provides encrypted remote administration and is therefore the preferred alternative.
+
+For these reasons, the lab's security policy permits SSH while blocking Telnet.
+
+**Custom rule:**
+
+```snort
+drop tcp 10.0.2.7 any -> 10.0.2.6 23 (msg:"LAB IPS - Telnet Connection Blocked"; sid:1000005; rev:2;)
+```
+
+**Attacker command:**
+
+```bash
+telnet 10.0.2.6 23
+```
+
+**Result:** Before inline IPS enforcement, the attacker successfully connected to the Telnet service and reached the Ubuntu login prompt.
+
+After enabling Snort's inline prevention configuration, the Telnet connection was refused and Snort generated a matching `[Drop]` event.
+
+This demonstrated that the insecure remote administration protocol was prevented while SSH remained permitted.
+
+**Evidence:**
+
+Telnet connection prevented:
+
+![Telnet Blocked](screenshots/Telnet.jpeg)
+
+Snort drop event:
+
+![Telnet IPS Drop](screenshots/TelnetIPS.jpeg)
+
+---
+
+### Scenario 6 — HTTP Connection Prevention (TCP 80)
+
+**Objective:** Prevent unencrypted HTTP access while permitting HTTPS.
+
+HTTP transmits application traffic without transport-layer encryption, potentially exposing sensitive information to interception.
+
+HTTPS uses TLS to provide encrypted communications and is generally preferred for modern web applications.
+
+The lab implements a strict policy that blocks HTTP connections while permitting HTTPS access.
+
+This is a deliberately restrictive demonstration policy; some production environments still require HTTP for redirects, compatibility or specialised services.
+
+**Custom rule:**
+
+```snort
+drop tcp 10.0.2.7 any -> 10.0.2.6 80 (msg:"LAB IPS - HTTP Connection Blocked"; sid:1000002; rev:2;)
+```
+
+**Attacker command:**
+
+```bash
+curl -v --connect-timeout 5 --max-time 10 http://10.0.2.6
+```
+
+**Result:** Before enabling inline prevention, Apache returned `HTTP/1.1 200 OK` and successfully delivered the HTTP login page.
+
+After enabling the Snort IPS configuration, HTTP connection attempts failed and Snort generated corresponding `[Drop]` events.
+
+An additional Firefox test demonstrated that the HTTP webpage could no longer be accessed.
+
+**Evidence:**
+
+HTTP connection prevented:
+
+![HTTP Browser Blocked](screenshots/HttpCurl.jpeg)
+
+![Visual HTTP Browser Blocked](screenshots/HttpVisual.jpeg)
+
+Snort drop event:
+
+![HTTP IPS Drop](screenshots/HttpIPS.jpeg)
+
+---
+
+### Scenario 7 — ICMP Source Quench Prevention
+
+**Objective:** Detect and prevent obsolete ICMP Source Quench traffic.
+
+ICMP Source Quench (Type 4, Code 0) was historically used to request that a sender reduce its transmission rate during congestion.
+
+The message type has since been deprecated because of security and protocol reliability concerns.
+
+To demonstrate protocol-level intrusion prevention, a custom rule was configured to drop ICMP Source Quench packets.
+
+**Custom rule:**
+
+```snort
+drop icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IPS - ICMP Source Quench Blocked"; itype:4; icode:0; sid:1000003; rev:2;)
+```
+
+**Traffic generation:**
+
+Netwox Tool 85, *Sniff and send ICMP4 source quench*, was used on the attacker VM to generate Source Quench traffic in response to captured packets.
+
+**Result:** Snort successfully identified Source Quench packets originating from `10.0.2.7` and generated repeated `[Drop]` events.
+
+This demonstrated active packet prevention using the custom ICMP security signature.
+
+**Evidence:**
+
+![Netwag Source Quench Generation](screenshots/SourceQuenchAttack.jpeg)
+
+![Source Quench IPS Drop](screenshots/SourceQuenceIPS.jpeg)
