@@ -92,11 +92,14 @@ Unlike Telnet, SSH protects authentication credentials and session contents agai
 
 For this reason, the lab's security policy permits SSH connections while monitoring connection attempts for security visibility.
 
-**Custom rule:**
+<details>
+<summary><strong>View Snort SSH Detection Rule</strong></summary>
 
 ```snort
 alert tcp 10.0.2.7 any -> 10.0.2.6 22 (msg:"LAB IDS - SSH Connection Attempt Detected"; flags:S; sid:1000004; rev:2;)
 ```
+
+</details>
 
 **Attacker command:**
 
@@ -124,11 +127,14 @@ HTTPS uses TLS to encrypt web communications, providing confidentiality and inte
 
 The lab's policy permits HTTPS traffic while recording connection attempts through Snort.
 
-**Custom rule:**
+<details>
+<summary><strong>View Snort HTTPS Connection Attempt Detection Rule</strong></summary>
 
 ```snort
 alert tcp 10.0.2.7 any -> 10.0.2.6 443 (msg:"LAB IDS - HTTPS Connection Attempt Detected"; flags:S; sid:1000006; rev:1;)
 ```
+
+</details>
 
 **Attacker command:**
 
@@ -162,11 +168,14 @@ ICMP Echo Requests are commonly used by administrators to verify connectivity an
 
 Because ICMP is useful for legitimate network diagnostics, the lab's security policy monitors ordinary Echo Requests instead of blocking them.
 
-**Custom rule:**
+<details>
+<summary><strong>View Snort ICMP Echo Request Detection Rule</strong></summary>
 
 ```snort
 alert icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IDS - ICMP Echo Request Detected"; itype:8; sid:1000001; rev:2;)
 ```
+
+</details>
 
 **Attacker command:**
 
@@ -192,11 +201,14 @@ While ordinary ICMP traffic is useful for network troubleshooting, an unusually 
 
 A threshold-based rule was implemented to detect ICMP traffic exceeding 20 requests within one second.
 
-**Custom rule:**
+<details>
+<summary><strong>View Snort ICMP Echo Flood Detection Rule</strong></summary>
 
 ```snort
 alert icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IDS - ICMP Echo Flood Detected"; itype:8; detection_filter:track by_src,count 20,seconds 1; sid:1000007; rev:1;)
 ```
+
+</details>
 
 **Attacker command:**
 
@@ -235,11 +247,15 @@ SSH provides encrypted remote administration and is therefore the preferred alte
 
 For these reasons, the lab's security policy permits SSH while blocking Telnet.
 
-**Custom rule:**
+
+<details>
+<summary><strong>View Snort Telnet Connection Drop Rule</strong></summary>
 
 ```snort
 drop tcp 10.0.2.7 any -> 10.0.2.6 23 (msg:"LAB IPS - Telnet Connection Blocked"; sid:1000005; rev:2;)
 ```
+
+</details>
 
 **Attacker command:**
 
@@ -277,11 +293,15 @@ The lab implements a strict policy that blocks HTTP connections while permitting
 
 This is a deliberately restrictive demonstration policy; some production environments still require HTTP for redirects, compatibility or specialised services.
 
-**Custom rule:**
+<details>
+```
+<summary><strong>View Snort HTTP Connection Drop Rule</strong></summary>
 
 ```snort
 drop tcp 10.0.2.7 any -> 10.0.2.6 80 (msg:"LAB IPS - HTTP Connection Blocked"; sid:1000002; rev:2;)
 ```
+
+</details>
 
 **Attacker command:**
 
@@ -319,11 +339,15 @@ The message type has since been deprecated because of security and protocol reli
 
 To demonstrate protocol-level intrusion prevention, a custom rule was configured to drop ICMP Source Quench packets.
 
-**Custom rule:**
+<details>
+```
+<summary><strong>View Snort ICMP Source Quench Drop Rule</strong></summary>
 
 ```snort
 drop icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IPS - ICMP Source Quench Blocked"; itype:4; icode:0; sid:1000003; rev:2;)
 ```
+
+</details>
 
 **Traffic generation:**
 
