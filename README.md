@@ -1,5 +1,15 @@
-# Snort-IDS-IPS-Network-Security-Lab
-A hands-on network security lab demonstrating intrusion detection and prevention using Snort 2.9.6, custom security rules, Linux NFQUEUE and two Ubuntu virtual machines.
+
+# 🛡️ Snort IDS/IPS Network Security Lab
+
+A hands-on cybersecurity lab demonstrating **intrusion detection, inline intrusion prevention, and custom Snort rule development** using two Ubuntu virtual machines.
+
+![Snort](https://img.shields.io/badge/Snort-2.9.6.0-D62828)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-Linux-E95420)
+![Security](https://img.shields.io/badge/Security-IDS%20%26%20IPS-2563EB)
+![Status](https://img.shields.io/badge/Status-Completed-22A06B)
+
+---
+
 
 ## Project Overview
 
