@@ -338,3 +338,75 @@ This demonstrated active packet prevention using the custom ICMP security signat
 ![Netwag Source Quench Generation](screenshots/SourceQuenchAttack.jpeg)
 
 ![Source Quench IPS Drop](screenshots/SourceQuenceIPS.jpeg)
+
+## Results Summary
+
+All seven scenarios produced the expected Snort detection or prevention events.
+
+| Scenario | Protocol | Snort Action | Outcome |
+|---|---|---|---|
+| SSH Connection | TCP 22 | Alert | Connection permitted and detected |
+| HTTPS Connection | TCP 443 | Alert | TLS connection permitted and detected |
+| ICMP Echo Request | ICMP Type 8 | Alert | Echo Requests detected |
+| ICMP Echo Flood | ICMP Type 8 | Alert | Traffic-rate threshold detected |
+| Telnet Connection | TCP 23 | Drop | Connection prevented |
+| HTTP Connection | TCP 80 | Drop | Connection prevented |
+| ICMP Source Quench | ICMP Type 4 | Drop | Packets discarded |
+
+The experiments demonstrated that Snort can enforce different security policies depending on the characteristics and intended use of network traffic.
+
+Importantly, legitimate SSH and HTTPS connections were permitted while insecure or prohibited Telnet and HTTP connections were blocked.
+
+Normal ICMP Echo Requests were monitored, while excessive ICMP traffic triggered threshold-based detection. Obsolete ICMP Source Quench packets were actively dropped.
+
+## Challenges and Troubleshooting
+
+One of the main technical challenges involved extending the original Snort installation from passive intrusion detection to active intrusion prevention.
+
+The installed DAQ library did not initially provide NFQUEUE support. To address this limitation, the required dependencies were installed and DAQ 2.0.2 was compiled with NFQUEUE enabled.
+
+Snort was subsequently configured to operate in inline mode, while iptables redirected selected incoming packets to NFQUEUE 0.
+
+Additional testing was conducted to verify that traffic was reaching Snort and that custom rules generated the expected alerts and drop events.
+
+This process reinforced the distinction between simply detecting suspicious packets and configuring a system capable of actively preventing their delivery.
+
+## Key Takeaways
+
+This project provided practical experience in:
+
+- Writing and testing custom Snort detection and prevention rules.
+- Understanding differences between IDS and IPS operation.
+- Configuring inline packet inspection using Linux NFQUEUE and iptables.
+- Monitoring legitimate network protocols while preventing insecure or prohibited traffic.
+- Detecting high-frequency ICMP traffic using threshold-based rules.
+- Generating network traffic and interpreting security alerts.
+- Troubleshooting security tool configurations and validating packet-drop behaviour.
+
+Overall, this lab demonstrated how Snort can support a layered network security strategy by combining traffic visibility with selective intrusion prevention.
+
+## Author
+
+**Ali Fares**
+
+Bachelor of Cybersecurity — University of Technology Sydney (UTS)
+
+This project extends an earlier UTS Cybersecurity practical through additional custom rules, protocol testing and inline Snort IPS implementation.
+
+## References
+
+## References
+
+Fielding, R., Nottingham, M., & Reschke, J. (2022). *HTTP semantics* (RFC 9110). RFC Editor. https://doi.org/10.17487/RFC9110
+
+Gont, F. (2012). *Deprecation of ICMP Source Quench messages* (RFC 6633). RFC Editor. https://doi.org/10.17487/RFC6633
+
+Postel, J. (1981). *Internet Control Message Protocol* (RFC 792). RFC Editor. https://doi.org/10.17487/RFC792
+
+Postel, J., & Reynolds, J. (1983). *Telnet protocol specification* (RFC 854). RFC Editor. https://doi.org/10.17487/RFC854
+
+Snort. (n.d.-a). *README.daq*. https://www.snort.org/document/readme-daq
+
+Snort. (n.d.-b). *README.filters*. https://www.snort.org/document/readme-filters
+
+Ylonen, T., & Lonvick, C. (2006). *The Secure Shell (SSH) protocol architecture* (RFC 4251). RFC Editor. https://doi.org/10.17487/RFC4251
