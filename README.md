@@ -21,8 +21,8 @@ Snort was configured with NFQUEUE to enable inline packet inspection, allowing s
 
 | Component | Configuration |
 |---|---|
-| Attacker | Ubuntu VM — 10.0.2.7 |
-| Server | Ubuntu VM — 10.0.2.6 |
+| Attacker | Ubuntu VM - 10.0.2.7 |
+| Server | Ubuntu VM - 10.0.2.6 |
 | Security Engine | Snort 2.9.6.0 |
 | Packet Processing | DAQ 2.0.2 / NFQUEUE |
 | Detection Scenarios | 4 |
@@ -47,7 +47,9 @@ Snort was configured with NFQUEUE to enable inline packet inspection, allowing s
 
 The lab consists of two Ubuntu virtual machines connected through an isolated virtual network.
 
-![Snort IDS/IPS Architecture](architecture/SnortArchitecture.drawio.png)
+<p align="center">
+  <img src="architecture/SnortArchitecture.drawio.png" width="750" alt="Snort IDS/IPS Architecture">
+</p>
 
 ### Attacker VM - 10.0.2.7
 
