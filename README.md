@@ -7,11 +7,11 @@ The lab consists of two Ubuntu virtual machines connected through an isolated vi
 
 ![Snort IDS/IPS Architecture](architecture/SnortArchitecture.drawio.png)
 
-### Attacker VM — 10.0.2.7
+### Attacker VM - 10.0.2.7
 
 The attacker VM generates controlled network traffic targeting the protected server, including SSH and Telnet connection attempts, HTTP/HTTPS requests and ICMP-based traffic.
 
-### Server VM — 10.0.2.6
+### Server VM - 10.0.2.6
 
 The protected server hosts the network services and Snort IDS/IPS engine.
 
@@ -82,7 +82,7 @@ The IDS component focuses on identifying and logging network activity without un
 
 Four detection scenarios were implemented using custom Snort `alert` rules.
 
-### Scenario 1 — SSH Connection Detection (TCP 22)
+### Scenario 1 - SSH Connection Detection (TCP 22)
 
 **Objective:** Detect SSH connection attempts while permitting legitimate remote administration.
 
@@ -116,7 +116,7 @@ The rule detects the TCP SYN connection attempt rather than determining whether 
 
 ---
 
-### Scenario 2 — HTTPS Connection Detection (TCP 443)
+### Scenario 2 - HTTPS Connection Detection (TCP 443)
 
 **Objective:** Detect HTTPS connection attempts while permitting encrypted web communication.
 
@@ -154,7 +154,7 @@ This certificate warning was unrelated to Snort's IDS operation.
 
 ---
 
-### Scenario 3 — ICMP Echo Request Detection
+### Scenario 3 - ICMP Echo Request Detection
 
 **Objective:** Detect ICMP Echo Requests while maintaining normal network connectivity.
 
@@ -184,7 +184,7 @@ ping -c 4 10.0.2.6
 
 ---
 
-### Scenario 4 — ICMP Echo Flood Detection
+### Scenario 4 - ICMP Echo Flood Detection
 
 **Objective:** Detect excessive ICMP Echo Requests using rate-based traffic analysis.
 
@@ -223,7 +223,7 @@ Three prevention scenarios were implemented using custom Snort `drop` rules.
 
 Unlike passive IDS operation, inline IPS processing allows Snort to issue packet-drop decisions through the NFQUEUE interface.
 
-### Scenario 5 — Telnet Connection Prevention (TCP 23)
+### Scenario 5 - Telnet Connection Prevention (TCP 23)
 
 **Objective:** Prevent insecure remote access using Telnet.
 
@@ -265,7 +265,7 @@ Snort drop event:
 
 ---
 
-### Scenario 6 — HTTP Connection Prevention (TCP 80)
+### Scenario 6 - HTTP Connection Prevention (TCP 80)
 
 **Objective:** Prevent unencrypted HTTP access while permitting HTTPS.
 
@@ -309,7 +309,7 @@ Snort drop event:
 
 ---
 
-### Scenario 7 — ICMP Source Quench Prevention
+### Scenario 7 - ICMP Source Quench Prevention
 
 **Objective:** Detect and prevent obsolete ICMP Source Quench traffic.
 
@@ -327,7 +327,7 @@ drop icmp 10.0.2.7 any -> 10.0.2.6 any (msg:"LAB IPS - ICMP Source Quench Blocke
 
 **Traffic generation:**
 
-Netwox Tool 85, *Sniff and send ICMP4 source quench*, was used on the attacker VM to generate Source Quench traffic in response to captured packets.
+Netwag Tool 85, *Sniff and send ICMP4 source quench*, was used on the attacker VM to generate Source Quench traffic in response to captured packets.
 
 **Result:** Snort successfully identified Source Quench packets originating from `10.0.2.7` and generated repeated `[Drop]` events.
 
@@ -392,8 +392,6 @@ Overall, this lab demonstrated how Snort can support a layered network security 
 Bachelor of Cybersecurity — University of Technology Sydney (UTS)
 
 This project extends an earlier UTS Cybersecurity practical through additional custom rules, protocol testing and inline Snort IPS implementation.
-
-## References
 
 ## References
 
